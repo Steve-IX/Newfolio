@@ -3,16 +3,25 @@
 import { useEffect, useRef } from "react";
 import { animate, stagger, splitText, svg, createScope } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { DURATION, EASE, STAGGER } from "@/lib/animations";
+import { showInstant } from "@/lib/motion";
 import { personalInfo } from "@/lib/data";
 
 export default function About() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      showInstant(root.current, [".about-label", ".about-paragraph", ".pull-quote"]);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       const quoteEl = root.current!.querySelector(".pull-quote") as HTMLElement;
@@ -25,8 +34,8 @@ export default function About() {
           translateY: ["100%", "0%"],
           filter: ["blur(6px)", "blur(0px)"],
           delay: stagger(18),
-          duration: 600,
-          ease: "easeOutQuart",
+          duration: DURATION.normal,
+          ease: EASE.entrance,
         });
 
         quoteSplit.addEffect(({ chars }) => {
@@ -47,9 +56,9 @@ export default function About() {
       animate(".about-paragraph", {
         opacity: [0, 1],
         translateY: [40, 0],
-        delay: stagger(120, { start: 300 }),
-        duration: 900,
-        ease: "easeOutQuart",
+        delay: stagger(STAGGER.slow, { start: 120 }),
+        duration: DURATION.slow,
+        ease: EASE.entrance,
       });
 
       animate(".about-label", {
@@ -72,7 +81,7 @@ export default function About() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <section id="about" ref={sectionRef} className="section-padding relative">
@@ -108,7 +117,7 @@ export default function About() {
               />
             </svg>
 
-            <blockquote className="relative">
+            <blockquote className="relative corner-mark p-6">
               <span className="absolute -top-8 -left-4 text-6xl font-display text-(--accent)/20">
                 &ldquo;
               </span>
@@ -136,7 +145,7 @@ export default function About() {
               {["Lancaster University", "BDO UK", "FDM Group", "AI & Quantum"].map((tag) => (
                 <span
                   key={tag}
-                  className="px-4 py-1.5 font-mono text-xs tracking-wider text-(--accent) border border-(--accent)/20 rounded-full"
+                  className="tag-angled px-4 py-1.5 font-mono text-xs tracking-wider text-(--accent) glass-surface"
                 >
                   {tag}
                 </span>

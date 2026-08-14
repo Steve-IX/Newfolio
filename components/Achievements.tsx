@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { animate, stagger, createScope, spring, svg as animeSvg } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 import { achievements } from "@/lib/data";
 
 const ICONS = [
@@ -47,7 +49,7 @@ function AchievementCard({
   }, [isVisible, achievement.numericValue, index]);
 
   return (
-    <div className="achievement-card glass-card p-6 text-center group opacity-0 relative overflow-hidden">
+    <div className="achievement-card glass-card corner-mark p-6 text-center group opacity-0 relative overflow-hidden">
       <div className="absolute -top-6 -right-6 w-24 h-24 opacity-[0.03]">
         <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="var(--accent)" strokeWidth="8" fill="none" /></svg>
       </div>
@@ -97,10 +99,16 @@ export default function Achievements() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".achievements-label", {
@@ -140,7 +148,7 @@ export default function Achievements() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <section id="achievements" ref={sectionRef} className="section-padding relative overflow-hidden">

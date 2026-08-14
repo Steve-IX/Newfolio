@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, stagger, createScope, spring, svg as animeSvg } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 import { projects } from "@/lib/data";
 import ProjectModal from "./ProjectModal";
 
@@ -52,10 +54,19 @@ function ProjectCard({
   return (
     <div
       ref={cardRef}
-      className="project-card glass-card relative group opacity-0 overflow-hidden transition-transform duration-200 cursor-pointer"
+      className="project-card glass-card corner-mark relative group opacity-0 overflow-hidden transition-transform duration-200 cursor-pointer"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open project ${project.name}`}
       style={{ transformStyle: "preserve-3d" }}
     >
       <div ref={glowRef} className="absolute inset-0 pointer-events-none transition-all duration-200 z-0" />
@@ -113,7 +124,7 @@ function ProjectCard({
           {project.tech.map((tech) => (
             <span
               key={tech}
-              className="tech-tag px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase rounded-md border border-(--border) text-(--muted-foreground) group-hover:text-(--accent) group-hover:border-(--accent)/30 transition-colors"
+              className="tech-tag tag-angled px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase glass-surface text-(--muted-foreground) group-hover:text-(--accent) transition-colors"
             >
               {tech}
             </span>
@@ -149,6 +160,7 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
 
   const allTech = ["All", ...Array.from(new Set(projects.flatMap((p) => p.tech.slice(0, 1))))];
 
@@ -157,6 +169,11 @@ export default function Projects() {
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".projects-label", {
@@ -203,7 +220,7 @@ export default function Projects() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   useEffect(() => {
     if (!hasAnimated.current || !root.current) return;
@@ -243,7 +260,7 @@ export default function Projects() {
               <button
                 key={tech}
                 onClick={() => setActiveFilter(tech)}
-                className={`projects-filter-btn px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider rounded-full border transition-all opacity-0 ${
+                className={`projects-filter-btn tag-angled px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider border transition-all opacity-0 ${
                   activeFilter === tech
                     ? "border-(--accent) text-(--accent) bg-(--accent)/10"
                     : "border-(--border) text-(--muted-foreground) hover:border-(--accent)/50"

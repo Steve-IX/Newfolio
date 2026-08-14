@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { animate, stagger, createScope, spring, svg as animeSvg } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 
 const HIGHLIGHTS = [
   {
@@ -35,10 +37,16 @@ export default function Dissertation() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.05 });
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".diss-label", {
@@ -126,7 +134,7 @@ export default function Dissertation() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <section id="dissertation" ref={sectionRef} className="section-padding relative overflow-hidden">
@@ -182,7 +190,7 @@ export default function Dissertation() {
         </div>
 
         {/* Abstract */}
-        <div className="diss-abstract glass-card p-6 md:p-8 mb-12 max-w-3xl opacity-0 relative">
+        <div className="diss-abstract glass-card corner-mark p-6 md:p-8 mb-12 max-w-3xl opacity-0 relative">
           <div className="absolute top-4 left-4 font-display text-6xl text-(--accent) opacity-10 leading-none">&ldquo;</div>
           <p className="text-sm md:text-base text-(--muted-foreground) leading-relaxed pl-8">
             This dissertation investigates the application of quantum algorithms &mdash; specifically the Quantum

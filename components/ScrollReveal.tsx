@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { EASE, DURATION } from "@/lib/animations";
 
 interface ScrollRevealProps {
@@ -30,9 +31,15 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const { ref, isVisible } = useScrollAnimation({ threshold, once });
   const innerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || !innerRef.current) return;
+
+    if (reducedMotion) {
+      innerRef.current.style.opacity = "1";
+      return;
+    }
 
     const targets = staggerChildren
       ? innerRef.current.children
@@ -52,7 +59,7 @@ export default function ScrollReveal({
 
     animate(targets, animProps);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <div ref={ref} className={className}>

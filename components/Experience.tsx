@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, stagger, svg, createScope, spring, createTimeline } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 import { experiences } from "@/lib/data";
 import Image from "next/image";
 
@@ -20,10 +22,16 @@ export default function Experience() {
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       const tl = createTimeline({ defaults: { ease: "easeOutQuart" } });
@@ -111,7 +119,7 @@ export default function Experience() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   const handleCardEnter = (e: React.MouseEvent, idx: number) => {
     setActiveIndex(idx);

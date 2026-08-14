@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, stagger, createScope, spring, svg as animeSvg } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 import { socialLinks, personalInfo } from "@/lib/data";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
@@ -35,10 +37,16 @@ export default function Contact() {
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".contact-label", {
@@ -130,7 +138,7 @@ export default function Contact() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   const handleSocialHover = (e: React.MouseEvent) => {
     animate(e.currentTarget, {
@@ -200,10 +208,11 @@ export default function Contact() {
               className="space-y-5"
             >
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
+                <label htmlFor="contact-name" className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Name
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
@@ -213,10 +222,11 @@ export default function Contact() {
               </div>
 
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
+                <label htmlFor="contact-email" className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Email
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   value={formState.email}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
@@ -226,10 +236,11 @@ export default function Contact() {
               </div>
 
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
+                <label htmlFor="contact-message" className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Message
                 </label>
                 <textarea
+                  id="contact-message"
                   value={formState.message}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                   rows={4}
@@ -240,7 +251,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="contact-cta-btn send-btn-pulse mt-4 px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) rounded-lg hover:bg-(--accent-secondary) transition-colors duration-300 opacity-0"
+                className="contact-cta-btn send-btn-pulse tag-angled mt-4 px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) hover:brightness-110 active:scale-[0.98] transition-all duration-200 opacity-0"
               >
                 Send Message
               </button>

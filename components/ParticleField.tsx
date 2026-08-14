@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { animate, stagger, createScope } from "animejs";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 interface ParticleFieldProps {
   count?: number;
@@ -15,6 +16,7 @@ function seeded(i: number, salt: number) {
 
 export default function ParticleField({ count = 30, className = "" }: ParticleFieldProps) {
   const root = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const particles = useMemo(
     () =>
@@ -28,7 +30,7 @@ export default function ParticleField({ count = 30, className = "" }: ParticleFi
   );
 
   useEffect(() => {
-    if (!root.current) return;
+    if (!root.current || reducedMotion) return;
 
     const scope = createScope({ root }).add(() => {
       const nodes = root.current!.querySelectorAll(".particle");
@@ -47,7 +49,7 @@ export default function ParticleField({ count = 30, className = "" }: ParticleFi
     });
 
     return () => scope.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <div ref={root} className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`} aria-hidden>

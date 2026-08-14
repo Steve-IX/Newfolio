@@ -11,6 +11,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import MusicPlayer from "@/components/MusicPlayer";
 import InteractiveBackground from "@/components/InteractiveBackground";
+import SectionDivider from "@/components/SectionDivider";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <InteractiveBackground />
       <Navigation />
       <Hero />
+      <SectionDivider />
       <About />
       <Achievements />
       <Experience />

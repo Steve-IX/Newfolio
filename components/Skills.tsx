@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { animate, stagger, createScope, spring, svg as animeSvg } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 import { skillCategories } from "@/lib/data";
 
 const CATEGORY_ICONS = [
@@ -89,10 +91,16 @@ export default function Skills() {
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [activeCategory, setActiveCategory] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".skills-label", {
@@ -146,7 +154,7 @@ export default function Skills() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   useEffect(() => {
     if (!hasAnimated.current || !root.current) return;
@@ -206,7 +214,7 @@ export default function Skills() {
             <button
               key={category.name}
               onClick={() => setActiveCategory(ci)}
-              className={`skills-tab flex items-center gap-2 px-5 py-3 rounded-xl font-mono text-xs uppercase tracking-wider border transition-all opacity-0 ${
+              className={`skills-tab tag-angled flex items-center gap-2 px-5 py-3 font-mono text-xs uppercase tracking-wider border transition-all opacity-0 ${
                 activeCategory === ci
                   ? "border-(--accent) text-(--accent) bg-(--accent)/10 shadow-[0_0_20px_-5px_var(--accent)]"
                   : "border-(--border) text-(--muted-foreground) hover:border-(--accent)/40 hover:text-(--foreground)"

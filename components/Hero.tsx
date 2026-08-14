@@ -7,11 +7,13 @@ import {
   createScope,
   svg,
   stagger,
-  spring,
   splitText,
 } from "animejs";
 import dynamic from "next/dynamic";
 import ParticleField from "./ParticleField";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { DURATION, EASE, STAGGER } from "@/lib/animations";
+import { showInstant } from "@/lib/motion";
 
 const WireframeGlobe = dynamic(() => import("./WireframeGlobe"), {
   ssr: false,
@@ -22,9 +24,28 @@ const WireframeGlobe = dynamic(() => import("./WireframeGlobe"), {
 
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!root.current) return;
+
+    if (reducedMotion) {
+      const overlay = root.current.querySelector(".hero-overlay") as HTMLElement | null;
+      if (overlay) overlay.style.opacity = "0";
+      showInstant(root.current, [
+        ".hero-name",
+        ".hero-tagline",
+        ".hero-subtitle",
+        ".hero-accent-line",
+        ".hero-badge",
+        ".hero-cta",
+        ".hero-stat",
+        ".hero-stat-divider",
+        ".hero-scroll-indicator",
+        ".hero-globe-container",
+      ]);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       const nameEl = root.current!.querySelector(".hero-name");
@@ -54,13 +75,13 @@ export default function Hero() {
       );
 
       const tl = createTimeline({
-        defaults: { ease: "easeOutExpo" },
+        defaults: { ease: EASE.entrance },
       });
 
       tl
         .add(".hero-overlay", {
           opacity: [1, 0],
-          duration: 900,
+          duration: DURATION.slow,
           ease: "easeOutQuad",
         })
         .add(heroDrawables, {
@@ -77,70 +98,62 @@ export default function Hero() {
         }, 400)
         .add(".hero-globe-container", {
           opacity: [0, 1],
-          scale: [0.3, 1],
-          rotate: ["-10deg", "0deg"],
-          duration: 1400,
-          ease: spring({ stiffness: 80, damping: 18 }),
-        }, 250)
+          scale: [0.92, 1],
+          duration: DURATION.slow,
+          ease: EASE.entrance,
+        }, 120)
         .add(nameSplit.chars, {
           opacity: [0, 1],
-          translateY: [120, 0],
-          rotateX: ["-90deg", "0deg"],
-          rotateZ: ["-5deg", "0deg"],
-          scale: [0.3, 1],
-          delay: stagger(30),
-          duration: 1400,
-          ease: "easeOutExpo",
-        }, 400)
+          translateY: [28, 0],
+          delay: stagger(STAGGER.chars),
+          duration: DURATION.slow,
+          ease: EASE.entrance,
+        }, 80)
         .add(taglineSplit.chars, {
           opacity: [0, 1],
-          translateY: [30, 0],
-          rotateX: ["-45deg", "0deg"],
-          delay: stagger(10),
-          duration: 700,
-        }, 850)
+          translateY: [12, 0],
+          delay: stagger(12),
+          duration: DURATION.normal,
+        }, 220)
         .add(".hero-subtitle", {
           opacity: [0, 1],
-          translateY: [20, 0],
-          duration: 700,
-        }, 1100)
+          translateY: [10, 0],
+          duration: DURATION.normal,
+        }, 80)
         .add(".hero-accent-line", {
           scaleX: [0, 1],
-          duration: 800,
-          ease: "easeOutQuart",
-        }, 1200)
+          duration: DURATION.normal,
+          ease: EASE.entrance,
+        }, 160)
         .add(".hero-badge", {
           opacity: [0, 1],
-          scale: [0.6, 1],
-          translateY: [10, 0],
-          delay: stagger(60),
-          duration: 500,
-          ease: spring({ stiffness: 400, damping: 20 }),
-        }, 1300)
+          translateY: [8, 0],
+          delay: stagger(STAGGER.normal),
+          duration: DURATION.fast,
+          ease: EASE.entrance,
+        }, 220)
         .add(".hero-cta", {
           opacity: [0, 1],
-          translateY: [30, 0],
-          scale: [0.9, 1],
-          delay: stagger(100),
-          duration: 800,
-          ease: spring({ stiffness: 200, damping: 20 }),
-        }, 1500)
+          translateY: [12, 0],
+          delay: stagger(STAGGER.normal),
+          duration: DURATION.normal,
+          ease: EASE.entrance,
+        }, 280)
         .add(".hero-stat", {
           opacity: [0, 1],
-          translateY: [20, 0],
-          delay: stagger(80),
-          duration: 600,
-        }, 1650)
+          translateY: [10, 0],
+          delay: stagger(STAGGER.normal),
+          duration: DURATION.normal,
+        }, 340)
         .add(".hero-stat-divider", {
           scaleY: [0, 1],
-          duration: 400,
-          delay: stagger(80, { start: 100 }),
-        }, 1700)
+          duration: DURATION.fast,
+        }, 360)
         .add(".hero-scroll-indicator", {
           opacity: [0, 1],
-          translateY: [20, 0],
-          duration: 600,
-        }, 1900);
+          translateY: [8, 0],
+          duration: DURATION.normal,
+        }, 400);
 
       nameSplit.addEffect(({ chars }) => {
         return animate(chars, {
@@ -216,7 +229,7 @@ export default function Hero() {
     });
 
     return () => scope.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section
@@ -226,7 +239,7 @@ export default function Hero() {
     >
       <div className="hero-overlay absolute inset-0 bg-(--background) z-10" />
 
-      <ParticleField count={60} />
+      <ParticleField count={24} />
 
       {/* SVG layer: flowing lines + circuit patterns */}
       <svg
@@ -288,9 +301,9 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-20 section-container w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-screen py-24">
+        <div className="site-grid items-center min-h-screen py-24">
           {/* Left: Text */}
-          <div className="text-left lg:pr-8">
+          <div className="col-span-4 md:col-span-8 lg:col-span-5 text-left lg:pr-4">
             <p className="hero-subtitle font-mono text-xs md:text-sm tracking-[0.3em] uppercase text-(--accent) mb-6 opacity-0">
               Software Engineer &middot; Automation &middot; AI
             </p>
@@ -313,7 +326,7 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-2 mb-8">
               {["C#", "Java", "RPA", "UiPath", ".NET", "Python"].map((tech) => (
-                <span key={tech} className="hero-badge px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase text-(--accent) border border-(--accent)/20 rounded-full opacity-0 hover:border-(--accent)/50 hover:bg-(--accent)/5 transition-all cursor-default">
+                <span key={tech} className="hero-badge tag-angled px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase text-(--accent) glass-surface opacity-0 hover:border-(--accent)/50 transition-colors cursor-default">
                   {tech}
                 </span>
               ))}
@@ -322,14 +335,14 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-10">
               <a
                 href="#projects"
-                className="hero-cta group relative px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) rounded-lg overflow-hidden opacity-0"
+                className="hero-cta group relative tag-angled px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) overflow-hidden opacity-0 hover:brightness-110 active:translate-y-px active:scale-[0.98] transition-[transform,filter] duration-200"
               >
                 <span className="relative z-10">View Work</span>
-                <span className="absolute inset-0 bg-(--accent-secondary) translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <span className="absolute inset-0 bg-(--accent-secondary) translate-y-full group-hover:translate-y-0 transition-transform duration-200" />
               </a>
               <a
                 href="#contact"
-                className="hero-cta px-8 py-3.5 font-mono text-sm uppercase tracking-wider border border-(--border) text-(--foreground) rounded-lg hover:border-(--accent) transition-colors duration-300 opacity-0"
+                className="hero-cta tag-angled px-8 py-3.5 font-mono text-sm uppercase tracking-wider glass-surface text-(--foreground) opacity-0 hover:border-(--accent) hover:text-(--accent) active:translate-y-px active:scale-[0.98] transition-all duration-200"
               >
                 Get in Touch
               </a>
@@ -342,7 +355,7 @@ export default function Hero() {
                 { label: "LeetCode", value: "63" },
               ].map((stat, i) => (
                 <div key={stat.label} className="flex items-center gap-6">
-                  <div className="hero-stat opacity-0">
+                  <div className="hero-stat opacity-0 glass-surface px-4 py-3">
                     <div className="text-2xl font-display font-bold gradient-text">{stat.value}</div>
                     <div className="font-mono text-[10px] tracking-wider uppercase text-(--muted-foreground)">{stat.label}</div>
                   </div>
@@ -355,7 +368,7 @@ export default function Hero() {
           </div>
 
           {/* Right: Globe + orbital elements */}
-          <div className="hero-globe-container hidden lg:flex items-center justify-center opacity-0 relative -mr-8 xl:-mr-4">
+          <div className="hero-globe-container hidden lg:flex lg:col-span-7 items-center justify-center opacity-0 relative -mr-8 xl:-mr-4">
             {/* Outer glow ring */}
             <div className="hero-glow-ring absolute w-[110%] h-[110%] rounded-full border border-(--accent)/5 border-dashed" style={{ transformOrigin: "center" }} />
 

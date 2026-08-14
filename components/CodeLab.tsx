@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { animate, stagger, splitText, createScope, spring } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 
 const CODE_SNIPPET = `// quantum_optimizer.py
 import qiskit
@@ -41,10 +43,16 @@ export default function CodeLab() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       animate(".codelab-label", {
@@ -94,7 +102,7 @@ export default function CodeLab() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <section id="codelab" ref={sectionRef} className="section-padding relative">

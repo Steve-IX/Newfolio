@@ -4,6 +4,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { animate, spring, createScope } from "animejs";
 import { playlist, Track } from "@/lib/tracks";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 
 export default function MusicPlayer() {
   const root = useRef<HTMLDivElement>(null);
@@ -21,6 +23,7 @@ export default function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7);
+  const reducedMotion = usePrefersReducedMotion();
 
   const currentTrack: Track = playlist[currentIndex];
 
@@ -148,17 +151,21 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     if (!root.current) return;
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
     const scope = createScope({ root }).add(() => {
       animate(".player-container", {
         opacity: [0, 1],
-        translateY: [40, 0],
-        duration: 600,
-        delay: 2000,
+        translateY: [24, 0],
+        duration: 400,
+        delay: 800,
         ease: "easeOutQuart",
       });
     });
     return () => scope.revert();
-  }, []);
+  }, [reducedMotion]);
 
   const handleExpandToggle = () => {
     setIsExpanded(!isExpanded);
@@ -196,7 +203,8 @@ export default function MusicPlayer() {
           /* Minimized: compact pill */
           <button
             onClick={handleExpandToggle}
-            className="flex items-center gap-3 px-4 py-2.5 glass-card glow-accent rounded-full cursor-pointer hover:border-(--accent)/40 transition-colors group"
+            className="flex items-center gap-3 px-4 py-2.5 glass-surface glow-accent rounded-full cursor-pointer hover:border-(--accent)/40 transition-colors group"
+            aria-label={`Now playing: ${currentTrack.title} by ${currentTrack.artist}. Expand player`}
           >
             <div className="w-8 h-8 rounded-full overflow-hidden bg-(--muted) shrink-0">
               <img src={currentTrack.cover} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
@@ -219,7 +227,7 @@ export default function MusicPlayer() {
           </button>
         ) : (
           /* Expanded player */
-          <div className="glass-card glow-accent rounded-2xl overflow-hidden" style={{ width: 320 }}>
+          <div className="glass-surface glow-accent rounded-2xl overflow-hidden" style={{ width: 320 }}>
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-(--border)">
               <span className="font-mono text-[10px] uppercase tracking-wider text-(--accent)">

@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, stagger, createScope, spring } from "animejs";
 import { navLinks } from "@/lib/data";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { DURATION, EASE, STAGGER } from "@/lib/animations";
+import { showInstant } from "@/lib/motion";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
@@ -10,6 +13,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,17 +35,21 @@ export default function Navigation() {
 
   useEffect(() => {
     if (!root.current) return;
+    if (reducedMotion) {
+      showInstant(root.current, [".nav-link"]);
+      return;
+    }
     const scope = createScope({ root }).add(() => {
       animate(".nav-link", {
         opacity: [0, 1],
-        translateY: [-10, 0],
-        delay: stagger(50, { start: 300 }),
-        duration: 600,
-        ease: "easeOutQuart",
+        translateY: [-8, 0],
+        delay: stagger(STAGGER.fast, { start: 200 }),
+        duration: DURATION.normal,
+        ease: EASE.entrance,
       });
     });
     return () => scope.revert();
-  }, []);
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -57,9 +65,10 @@ export default function Navigation() {
   }, [mobileOpen]);
 
   const handleLinkHover = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (reducedMotion) return;
     animate(e.currentTarget, {
       scale: 1.05,
-      duration: 300,
+      duration: DURATION.fast,
       ease: spring({ stiffness: 400, damping: 15 }),
     });
   };
@@ -75,18 +84,18 @@ export default function Navigation() {
   return (
     <nav
       ref={root}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background,backdrop-filter,border] duration-300 ${
         isScrolled
-          ? "bg-(--background)/90 backdrop-blur-xl border-b border-(--border)"
+          ? "glass-surface rounded-none border-x-0 border-t-0"
           : "bg-transparent"
       }`}
     >
       <div className="section-container flex items-center justify-between h-16 md:h-20">
         <a
           href="#hero"
-          className="font-mono text-sm tracking-widest uppercase text-(--accent) font-bold"
+          className="font-display text-lg md:text-xl tracking-tight text-(--foreground) font-bold hover:text-(--accent) transition-colors"
         >
-          SA.
+          SA<span className="text-(--accent)">.</span>
         </a>
 
         {/* Desktop nav */}
@@ -116,9 +125,11 @@ export default function Navigation() {
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
           <button
+            type="button"
             className="flex flex-col gap-1.5 p-2"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             <span
               className={`block w-6 h-0.5 bg-(--foreground) transition-transform duration-300 ${
@@ -141,7 +152,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-(--background)/95 backdrop-blur-xl border-b border-(--border)">
+        <div className="md:hidden glass-surface rounded-none border-x-0">
           <div className="section-container py-6 flex flex-col gap-2">
             {navLinks.map((link) => (
               <a

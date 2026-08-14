@@ -3,15 +3,23 @@
 import { useEffect, useRef } from "react";
 import { animate, svg, createScope, stagger } from "animejs";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { revealHidden } from "@/lib/motion";
 
 export default function Footer() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.3 });
   const root = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!isVisible || hasAnimated.current || !root.current) return;
     hasAnimated.current = true;
+
+    if (reducedMotion) {
+      revealHidden(root.current);
+      return;
+    }
 
     const scope = createScope({ root }).add(() => {
       const lines = root.current!.querySelectorAll(".footer-line");
@@ -34,7 +42,7 @@ export default function Footer() {
     });
 
     return () => scope.revert();
-  }, [isVisible]);
+  }, [isVisible, reducedMotion]);
 
   return (
     <footer ref={sectionRef} className="relative py-12 border-t border-(--border)">
@@ -67,7 +75,7 @@ export default function Footer() {
           </div>
 
           <p className="font-mono text-[10px] text-(--muted-foreground) tracking-wider">
-            Built with Next.js &middot; Anime.js v4 &middot; Tailwind CSS
+            Built with Next.js &middot; Three.js &middot; Anime.js &middot; Tailwind CSS
           </p>
         </div>
       </div>

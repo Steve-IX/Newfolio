@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-const GRID_SPACING = 50;
-const INFLUENCE_RADIUS = 160;
-const DOT_BASE_SIZE = 1.2;
-const DOT_MAX_SIZE = 3.5;
-const LINE_DISTANCE = 100;
+const GRID_SPACING = 56;
+const INFLUENCE_RADIUS = 140;
+const DOT_BASE_SIZE = 1;
+const DOT_MAX_SIZE = 2.8;
+const LINE_DISTANCE = 90;
 
 interface Dot {
   x: number;
@@ -37,7 +37,7 @@ export default function InteractiveBackground() {
           baseX: col * GRID_SPACING,
           baseY: row * GRID_SPACING,
           size: DOT_BASE_SIZE,
-          opacity: 0.08,
+          opacity: 0.05,
           hue: 0,
         });
       }

@@ -15,7 +15,7 @@ import SectionDivider from "@/components/SectionDivider";
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative overflow-x-hidden">
       <InteractiveBackground />
       <Navigation />
       <Hero />

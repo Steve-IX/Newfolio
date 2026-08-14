@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import { useIsMinWidth } from "@/hooks/useIsMinWidth";
 
 const GRID_SPACING = 56;
 const INFLUENCE_RADIUS = 140;
@@ -19,6 +20,7 @@ interface Dot {
 }
 
 export default function InteractiveBackground() {
+  const enabled = useIsMinWidth(768);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dotsRef = useRef<Dot[]>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
@@ -46,6 +48,7 @@ export default function InteractiveBackground() {
   }, []);
 
   useEffect(() => {
+    if (!enabled) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -162,7 +165,9 @@ export default function InteractiveBackground() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       mql.removeEventListener("change", motionHandler);
     };
-  }, [initDots]);
+  }, [initDots, enabled]);
+
+  if (!enabled) return null;
 
   return (
     <canvas

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   animate,
   createTimeline,
@@ -12,6 +12,7 @@ import {
 import dynamic from "next/dynamic";
 import ParticleField from "./ParticleField";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useIsMinWidth } from "@/hooks/useIsMinWidth";
 import { DURATION, EASE, STAGGER } from "@/lib/animations";
 import { showInstant } from "@/lib/motion";
 
@@ -22,12 +23,23 @@ const WireframeGlobe = dynamic(() => import("./WireframeGlobe"), {
   ),
 });
 
+let heroMotionStarted = false;
+
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
+  const isDesktop = useIsMinWidth(1024);
+  const [showGlobe, setShowGlobe] = useState(false);
 
   useEffect(() => {
-    if (!root.current) return;
+    if (!isDesktop) return;
+    const id = window.setTimeout(() => setShowGlobe(true), 500);
+    return () => window.clearTimeout(id);
+  }, [isDesktop]);
+
+  useEffect(() => {
+    if (!root.current || heroMotionStarted) return;
+    heroMotionStarted = true;
 
     if (reducedMotion) {
       const overlay = root.current.querySelector(".hero-overlay") as HTMLElement | null;
@@ -48,22 +60,14 @@ export default function Hero() {
     }
 
     const scope = createScope({ root }).add(() => {
-      const nameEl = root.current!.querySelector(".hero-name");
-      const taglineEl = root.current!.querySelector(".hero-tagline");
+      const nameEl = root.current!.querySelector(".hero-name") as HTMLElement | null;
+      const taglineEl = root.current!.querySelector(".hero-tagline") as HTMLElement | null;
 
       if (!nameEl || !taglineEl) return;
 
-      (nameEl as HTMLElement).style.opacity = "1";
-      (taglineEl as HTMLElement).style.opacity = "1";
-
-      const nameSplit = splitText(nameEl as HTMLElement, {
+      const taglineSplit = splitText(taglineEl, {
         chars: { wrap: "clip" },
       });
-      const taglineSplit = splitText(taglineEl as HTMLElement, {
-        chars: { wrap: "clip" },
-      });
-
-      nameSplit.chars.forEach((c: HTMLElement) => (c.style.opacity = "0"));
       taglineSplit.chars.forEach((c: HTMLElement) => (c.style.opacity = "0"));
 
       const heroDrawables = svg.createDrawable(
@@ -102,13 +106,6 @@ export default function Hero() {
           duration: DURATION.slow,
           ease: EASE.entrance,
         }, 120)
-        .add(nameSplit.chars, {
-          opacity: [0, 1],
-          translateY: [28, 0],
-          delay: stagger(STAGGER.chars),
-          duration: DURATION.slow,
-          ease: EASE.entrance,
-        }, 80)
         .add(taglineSplit.chars, {
           opacity: [0, 1],
           translateY: [12, 0],
@@ -154,29 +151,6 @@ export default function Hero() {
           translateY: [8, 0],
           duration: DURATION.normal,
         }, 400);
-
-      nameSplit.addEffect(({ chars }) => {
-        return animate(chars, {
-          backgroundImage: [
-            { to: "linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent))" },
-          ],
-          backgroundClip: "text",
-          webkitBackgroundClip: "text",
-          color: [
-            { to: "transparent", delay: 3000 },
-            { to: "var(--foreground)", delay: 500 },
-          ],
-          filter: [
-            { to: "brightness(1)" },
-            { to: "brightness(1.3)", delay: 3000 },
-            { to: "brightness(1)", delay: 500 },
-          ],
-          delay: stagger(80, { start: 2500 }),
-          duration: 4000,
-          loop: true,
-          ease: "easeInOutSine",
-        });
-      });
 
       animate(".hero-float-shape", {
         translateY: () => [
@@ -239,7 +213,7 @@ export default function Hero() {
     >
       <div className="hero-overlay absolute inset-0 bg-(--background) z-10" />
 
-      <ParticleField count={24} />
+      {isDesktop && <ParticleField count={24} />}
 
       {/* SVG layer: flowing lines + circuit patterns */}
       <svg
@@ -309,15 +283,13 @@ export default function Hero() {
             </p>
 
             <h1
-              className="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-display font-bold mb-6 leading-[0.95]"
-              style={{ opacity: 0, perspective: "1200px" }}
+              className="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-display font-bold mb-6 leading-[0.95] gradient-text"
             >
               Stephen Addo
             </h1>
 
             <p
               className="hero-tagline text-lg md:text-xl lg:text-2xl text-(--muted-foreground) font-light mb-4 tracking-wide"
-              style={{ opacity: 0, perspective: "600px" }}
             >
               Automation Software Engineer @ BDO UK
             </p>
@@ -368,7 +340,8 @@ export default function Hero() {
           </div>
 
           {/* Right: Globe + orbital elements */}
-          <div className="hero-globe-container hidden lg:flex lg:col-span-7 items-center justify-center opacity-0 relative -mr-8 xl:-mr-4">
+          {isDesktop && (
+          <div className="hero-globe-container flex lg:col-span-7 items-center justify-center opacity-0 relative -mr-8 xl:-mr-4">
             {/* Outer glow ring */}
             <div className="hero-glow-ring absolute w-[110%] h-[110%] rounded-full border border-(--accent)/5 border-dashed" style={{ transformOrigin: "center" }} />
 
@@ -390,8 +363,9 @@ export default function Hero() {
               </div>
             </div>
 
-            <WireframeGlobe size={650} />
+            {showGlobe && <WireframeGlobe size={650} />}
           </div>
+          )}
         </div>
 
         {/* Scroll indicator */}

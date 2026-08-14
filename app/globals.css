@@ -191,6 +191,7 @@
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--accent) var(--background);
+    overflow-x: hidden;
   }
 
   body {

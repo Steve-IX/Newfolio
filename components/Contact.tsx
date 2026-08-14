@@ -175,20 +175,20 @@ export default function Contact() {
 
       <div ref={root} className="section-container">
         <div className="contact-label flex items-center gap-4 mb-16 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             08 / Contact
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Form side */}
           <div>
-            <h2 className="contact-heading text-4xl md:text-5xl font-serif font-bold mb-4 opacity-0">
+            <h2 className="contact-heading text-4xl md:text-5xl font-display font-bold mb-4 opacity-0">
               Let&apos;s work<br />
               <span className="gradient-text">together.</span>
             </h2>
-            <p className="contact-heading text-[var(--muted-foreground)] mb-8 opacity-0">
+            <p className="contact-heading text-(--muted-foreground) mb-8 opacity-0">
               Have a project in mind? I&apos;d love to hear about it.
             </p>
 
@@ -200,47 +200,47 @@ export default function Contact() {
               className="space-y-5"
             >
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-[var(--muted-foreground)] mb-2">
+                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Name
                 </label>
                 <input
                   type="text"
                   value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full bg-transparent border-b-2 border-[var(--border)] focus:border-[var(--accent)] py-3 text-[var(--foreground)] outline-none transition-colors font-light"
+                  className="w-full bg-transparent border-b-2 border-(--border) focus:border-(--accent) py-3 text-(--foreground) outline-hidden transition-colors font-light"
                   placeholder="Your name"
                 />
               </div>
 
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-[var(--muted-foreground)] mb-2">
+                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Email
                 </label>
                 <input
                   type="email"
                   value={formState.email}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  className="w-full bg-transparent border-b-2 border-[var(--border)] focus:border-[var(--accent)] py-3 text-[var(--foreground)] outline-none transition-colors font-light"
+                  className="w-full bg-transparent border-b-2 border-(--border) focus:border-(--accent) py-3 text-(--foreground) outline-hidden transition-colors font-light"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div className="form-field opacity-0">
-                <label className="block font-mono text-xs uppercase tracking-wider text-[var(--muted-foreground)] mb-2">
+                <label className="block font-mono text-xs uppercase tracking-wider text-(--muted-foreground) mb-2">
                   Message
                 </label>
                 <textarea
                   value={formState.message}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                   rows={4}
-                  className="w-full bg-transparent border-b-2 border-[var(--border)] focus:border-[var(--accent)] py-3 text-[var(--foreground)] outline-none transition-colors font-light resize-none"
+                  className="w-full bg-transparent border-b-2 border-(--border) focus:border-(--accent) py-3 text-(--foreground) outline-hidden transition-colors font-light resize-none"
                   placeholder="Tell me about your project..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="contact-cta-btn send-btn-pulse mt-4 px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-[var(--accent)] text-[var(--background)] rounded-lg hover:bg-[var(--accent-secondary)] transition-colors duration-300 opacity-0"
+                className="contact-cta-btn send-btn-pulse mt-4 px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) rounded-lg hover:bg-(--accent-secondary) transition-colors duration-300 opacity-0"
               >
                 Send Message
               </button>
@@ -250,7 +250,7 @@ export default function Contact() {
           {/* Social / info side */}
           <div className="flex flex-col justify-center">
             <div className="glass-card p-8 md:p-10">
-              <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent)] mb-8">
+              <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-(--accent) mb-8">
                 Connect
               </h3>
 
@@ -265,14 +265,14 @@ export default function Contact() {
                     onMouseEnter={handleSocialHover}
                     onMouseLeave={handleSocialLeave}
                   >
-                    <div className="w-12 h-12 rounded-lg bg-[var(--muted)] flex items-center justify-center text-[var(--muted-foreground)] group-hover:text-[var(--accent)] group-hover:bg-[var(--accent)]/10 transition-colors">
+                    <div className="w-12 h-12 rounded-lg bg-(--muted) flex items-center justify-center text-(--muted-foreground) group-hover:text-(--accent) group-hover:bg-(--accent)/10 transition-colors">
                       {SOCIAL_ICONS[link.icon]}
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                      <span className="text-sm font-medium text-(--foreground) group-hover:text-(--accent) transition-colors">
                         {link.name}
                       </span>
-                      <span className="block text-xs text-[var(--muted-foreground)] font-mono">
+                      <span className="block text-xs text-(--muted-foreground) font-mono">
                         {link.url.replace("mailto:", "").replace("https://", "")}
                       </span>
                     </div>
@@ -280,8 +280,8 @@ export default function Contact() {
                 ))}
               </div>
 
-              <div className="mt-10 pt-8 border-t border-[var(--border)]">
-                <p className="font-mono text-xs text-[var(--muted-foreground)] leading-relaxed">
+              <div className="mt-10 pt-8 border-t border-(--border)">
+                <p className="font-mono text-xs text-(--muted-foreground) leading-relaxed">
                   Based in the UK. Open to full-time roles, freelance projects, and
                   collaborations in software engineering, automation, and AI.
                 </p>

@@ -235,7 +235,7 @@ export default function WireframeGlobe({ size = 650, className = "" }: Wireframe
 
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
-      <div className="absolute inset-[-20%] rounded-full bg-[var(--accent)] opacity-[0.05] blur-[100px]" />
+      <div className="absolute inset-[-20%] rounded-full bg-(--accent) opacity-[0.05] blur-[100px]" />
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );

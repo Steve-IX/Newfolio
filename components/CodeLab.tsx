@@ -100,22 +100,22 @@ export default function CodeLab() {
     <section id="codelab" ref={sectionRef} className="section-padding relative">
       <div ref={root} className="section-container">
         <div className="codelab-label flex items-center gap-4 mb-16 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             07 / Code Lab
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="terminal-window rounded-xl overflow-hidden border border-[var(--border)] opacity-0">
+          <div className="terminal-window rounded-xl overflow-hidden border border-(--border) opacity-0">
             {/* Terminal header */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-[var(--muted)] border-b border-[var(--border)]">
+            <div className="flex items-center gap-3 px-4 py-3 bg-(--muted) border-b border-(--border)">
               <div className="flex items-center gap-2">
                 <div className="terminal-dot w-3 h-3 rounded-full bg-red-500/80" />
                 <div className="terminal-dot w-3 h-3 rounded-full bg-yellow-500/80" />
                 <div className="terminal-dot w-3 h-3 rounded-full bg-green-500/80" />
               </div>
-              <span className="font-mono text-xs text-[var(--muted-foreground)] ml-2">
+              <span className="font-mono text-xs text-(--muted-foreground) ml-2">
                 quantum_optimizer.py &mdash; ~/projects/dissertation
               </span>
             </div>
@@ -124,27 +124,27 @@ export default function CodeLab() {
             <div className="p-6 md:p-8 bg-[#0d0d15] overflow-x-auto">
               <pre className="font-mono text-xs md:text-sm leading-relaxed">
                 <code
-                  className="code-content text-[var(--foreground)]"
+                  className="code-content text-(--foreground)"
                   style={{ opacity: 0 }}
                 >
                   {CODE_SNIPPET}
                 </code>
-                <span className="terminal-cursor inline-block w-2 h-4 bg-[var(--accent)] ml-0.5 align-text-bottom" />
+                <span className="terminal-cursor inline-block w-2 h-4 bg-(--accent) ml-0.5 align-text-bottom" />
               </pre>
             </div>
 
             {/* Terminal footer */}
-            <div className="flex items-center justify-between px-4 py-2 bg-[var(--muted)] border-t border-[var(--border)]">
-              <span className="font-mono text-[10px] text-[var(--muted-foreground)]">
+            <div className="flex items-center justify-between px-4 py-2 bg-(--muted) border-t border-(--border)">
+              <span className="font-mono text-[10px] text-(--muted-foreground)">
                 Python 3.11 &middot; Qiskit 1.0
               </span>
-              <span className="font-mono text-[10px] text-[var(--accent)]">
+              <span className="font-mono text-[10px] text-(--accent)">
                 Ln 34, Col 1
               </span>
             </div>
           </div>
 
-          <p className="text-center text-sm text-[var(--muted-foreground)] mt-6">
+          <p className="text-center text-sm text-(--muted-foreground) mt-6">
             A snippet from my quantum computing dissertation &mdash; exploring QAOA for combinatorial optimization
           </p>
         </div>

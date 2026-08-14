@@ -79,10 +79,10 @@ export default function About() {
       <div ref={root} className="section-container">
         {/* Section label */}
         <div className="about-label flex items-center gap-4 mb-16 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             01 / About
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
@@ -109,11 +109,11 @@ export default function About() {
             </svg>
 
             <blockquote className="relative">
-              <span className="absolute -top-8 -left-4 text-6xl font-serif text-[var(--accent)]/20">
+              <span className="absolute -top-8 -left-4 text-6xl font-display text-(--accent)/20">
                 &ldquo;
               </span>
               <p
-                className="pull-quote text-2xl md:text-3xl lg:text-4xl font-serif leading-snug text-[var(--foreground)]"
+                className="pull-quote text-2xl md:text-3xl lg:text-4xl font-display leading-snug text-(--foreground)"
                 style={{ opacity: 0 }}
               >
                 {personalInfo.pullQuote}
@@ -126,7 +126,7 @@ export default function About() {
             {personalInfo.about.map((paragraph, i) => (
               <p
                 key={i}
-                className="about-paragraph text-base md:text-lg leading-relaxed text-[var(--muted-foreground)] opacity-0"
+                className="about-paragraph text-base md:text-lg leading-relaxed text-(--muted-foreground) opacity-0"
               >
                 {paragraph}
               </p>
@@ -136,7 +136,7 @@ export default function About() {
               {["Lancaster University", "BDO UK", "FDM Group", "AI & Quantum"].map((tag) => (
                 <span
                   key={tag}
-                  className="px-4 py-1.5 font-mono text-xs tracking-wider text-[var(--accent)] border border-[var(--accent)]/20 rounded-full"
+                  className="px-4 py-1.5 font-mono text-xs tracking-wider text-(--accent) border border-(--accent)/20 rounded-full"
                 >
                   {tag}
                 </span>

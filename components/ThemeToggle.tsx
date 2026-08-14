@@ -23,7 +23,7 @@ export default function ThemeToggle() {
     <button
       ref={btnRef}
       onClick={handleClick}
-      className="w-9 h-9 rounded-full flex items-center justify-center bg-[var(--muted)] text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
+      className="w-9 h-9 rounded-full flex items-center justify-center bg-(--muted) text-(--foreground) hover:text-(--accent) transition-colors"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? (

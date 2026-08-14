@@ -188,7 +188,7 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div ref={root} className="fixed bottom-4 left-4 z-[100]">
+    <div ref={root} className="fixed bottom-4 left-4 z-100">
       <audio ref={audioRef} preload="metadata" />
 
       <div className="player-container opacity-0">
@@ -196,21 +196,21 @@ export default function MusicPlayer() {
           /* Minimized: compact pill */
           <button
             onClick={handleExpandToggle}
-            className="flex items-center gap-3 px-4 py-2.5 glass-card glow-accent rounded-full cursor-pointer hover:border-[var(--accent)]/40 transition-colors group"
+            className="flex items-center gap-3 px-4 py-2.5 glass-card glow-accent rounded-full cursor-pointer hover:border-(--accent)/40 transition-colors group"
           >
-            <div className="w-8 h-8 rounded-full overflow-hidden bg-[var(--muted)] shrink-0">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-(--muted) shrink-0">
               <img src={currentTrack.cover} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
             </div>
             <div className="text-left max-w-[120px]">
-              <div className="text-xs font-medium text-[var(--foreground)] truncate">{currentTrack.title}</div>
-              <div className="text-[10px] text-[var(--muted-foreground)] truncate">{currentTrack.artist}</div>
+              <div className="text-xs font-medium text-(--foreground) truncate">{currentTrack.title}</div>
+              <div className="text-[10px] text-(--muted-foreground) truncate">{currentTrack.artist}</div>
             </div>
             {isPlaying && (
               <div className="flex items-end gap-px h-4">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="w-[3px] bg-[var(--accent)] rounded-full animate-pulse"
+                    className="w-[3px] bg-(--accent) rounded-full animate-pulse"
                     style={{ height: `${8 + i * 4}px`, animationDelay: `${i * 0.15}s` }}
                   />
                 ))}
@@ -221,21 +221,21 @@ export default function MusicPlayer() {
           /* Expanded player */
           <div className="glass-card glow-accent rounded-2xl overflow-hidden" style={{ width: 320 }}>
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--border)]">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--accent)]">
+            <div className="flex items-center justify-between px-4 py-2 border-b border-(--border)">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-(--accent)">
                 Now Playing
               </span>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setShowPlaylist(!showPlaylist)}
-                  className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-[var(--muted)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+                  className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-(--muted) text-(--muted-foreground) hover:text-(--foreground) transition-colors"
                   aria-label="Toggle playlist"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>
                 </button>
                 <button
                   onClick={handleExpandToggle}
-                  className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-[var(--muted)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+                  className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-(--muted) text-(--muted-foreground) hover:text-(--foreground) transition-colors"
                   aria-label="Minimize"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5"><path d="M6 18L18 6M6 6l12 12" /></svg>
@@ -250,23 +250,23 @@ export default function MusicPlayer() {
                   <button
                     key={i}
                     onClick={() => selectTrack(i)}
-                    className={`w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[var(--muted)] transition-colors text-left ${
-                      i === currentIndex ? "bg-[var(--muted)]" : ""
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 hover:bg-(--muted) transition-colors text-left ${
+                      i === currentIndex ? "bg-(--muted)" : ""
                     }`}
                   >
-                    <div className="w-8 h-8 rounded overflow-hidden bg-[var(--muted)] shrink-0">
+                    <div className="w-8 h-8 rounded-sm overflow-hidden bg-(--muted) shrink-0">
                       <img src={track.cover} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className={`text-xs font-medium truncate ${i === currentIndex ? "text-[var(--accent)]" : "text-[var(--foreground)]"}`}>
+                      <div className={`text-xs font-medium truncate ${i === currentIndex ? "text-(--accent)" : "text-(--foreground)"}`}>
                         {track.title}
                       </div>
-                      <div className="text-[10px] text-[var(--muted-foreground)] truncate">{track.artist}</div>
+                      <div className="text-[10px] text-(--muted-foreground) truncate">{track.artist}</div>
                     </div>
                     {i === currentIndex && isPlaying && (
                       <div className="flex items-end gap-px h-3">
                         {[1, 2, 3].map((j) => (
-                          <div key={j} className="w-[2px] bg-[var(--accent)] rounded-full animate-pulse" style={{ height: `${4 + j * 3}px`, animationDelay: `${j * 0.15}s` }} />
+                          <div key={j} className="w-[2px] bg-(--accent) rounded-full animate-pulse" style={{ height: `${4 + j * 3}px`, animationDelay: `${j * 0.15}s` }} />
                         ))}
                       </div>
                     )}
@@ -277,7 +277,7 @@ export default function MusicPlayer() {
               <>
                 {/* Cover art + Visualizer */}
                 <div className="relative px-4 pt-4">
-                  <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[var(--muted)] mb-3">
+                  <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-(--muted) mb-3">
                     <img
                       src={currentTrack.cover}
                       alt={currentTrack.title}
@@ -303,34 +303,34 @@ export default function MusicPlayer() {
 
                 {/* Track info */}
                 <div className="px-4 pb-2">
-                  <div className="text-sm font-medium text-[var(--foreground)] truncate">{currentTrack.title}</div>
-                  <div className="text-xs text-[var(--muted-foreground)] truncate">{currentTrack.artist}</div>
+                  <div className="text-sm font-medium text-(--foreground) truncate">{currentTrack.title}</div>
+                  <div className="text-xs text-(--muted-foreground) truncate">{currentTrack.artist}</div>
                 </div>
 
                 {/* Progress */}
                 <div className="px-4 pb-2">
-                  <div className="w-full h-1 bg-[var(--muted)] rounded-full cursor-pointer group" onClick={seek}>
+                  <div className="w-full h-1 bg-(--muted) rounded-full cursor-pointer group" onClick={seek}>
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-secondary)] relative"
+                      className="h-full rounded-full bg-linear-to-r from-(--accent) to-(--accent-secondary) relative"
                       style={{ width: duration ? `${(progress / duration) * 100}%` : "0%" }}
                     >
-                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_6px_var(--accent)]" />
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-(--accent) opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_6px_var(--accent)]" />
                     </div>
                   </div>
                   <div className="flex justify-between mt-1">
-                    <span className="font-mono text-[9px] text-[var(--muted-foreground)]">{formatTime(progress)}</span>
-                    <span className="font-mono text-[9px] text-[var(--muted-foreground)]">{formatTime(duration)}</span>
+                    <span className="font-mono text-[9px] text-(--muted-foreground)">{formatTime(progress)}</span>
+                    <span className="font-mono text-[9px] text-(--muted-foreground)">{formatTime(duration)}</span>
                   </div>
                 </div>
 
                 {/* Controls */}
                 <div className="flex items-center justify-center gap-4 px-4 pb-3">
-                  <button onClick={prevTrack} className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors" aria-label="Previous">
+                  <button onClick={prevTrack} className="text-(--muted-foreground) hover:text-(--foreground) transition-colors" aria-label="Previous">
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" /></svg>
                   </button>
                   <button
                     onClick={togglePlay}
-                    className="w-10 h-10 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center hover:bg-[var(--accent-secondary)] transition-colors"
+                    className="w-10 h-10 rounded-full bg-(--accent) text-(--background) flex items-center justify-center hover:bg-(--accent-secondary) transition-colors"
                     aria-label={isPlaying ? "Pause" : "Play"}
                   >
                     {isPlaying ? (
@@ -339,7 +339,7 @@ export default function MusicPlayer() {
                       <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 ml-0.5"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                     )}
                   </button>
-                  <button onClick={nextTrack} className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors" aria-label="Next">
+                  <button onClick={nextTrack} className="text-(--muted-foreground) hover:text-(--foreground) transition-colors" aria-label="Next">
                     <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" /></svg>
                   </button>
                 </div>
@@ -354,7 +354,7 @@ export default function MusicPlayer() {
                     step={0.01}
                     value={volume}
                     onChange={(e) => setVolume(parseFloat(e.target.value))}
-                    className="w-full h-1 appearance-none bg-[var(--muted)] rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--accent)]"
+                    className="w-full h-1 appearance-none bg-(--muted) rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-(--accent)"
                   />
                 </div>
               </>

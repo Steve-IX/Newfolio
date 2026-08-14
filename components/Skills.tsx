@@ -51,7 +51,7 @@ function SkillOrb({
   }, [isVisible, skill.level, index]);
 
   return (
-    <div className="skill-orb flex items-center gap-3 p-3 rounded-xl hover:bg-[var(--muted)]/50 transition-all group/skill opacity-0 cursor-default">
+    <div className="skill-orb flex items-center gap-3 p-3 rounded-xl hover:bg-(--muted)/50 transition-all group/skill opacity-0 cursor-default">
       <div className="relative w-14 h-14 shrink-0">
         <svg viewBox="0 0 64 64" className="w-full h-full -rotate-90">
           <circle cx="32" cy="32" r="28" fill="none" stroke="var(--muted)" strokeWidth="3" />
@@ -73,10 +73,10 @@ function SkillOrb({
         </div>
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-sm font-medium text-[var(--foreground)] group-hover/skill:text-[var(--accent)] transition-colors">{skill.name}</div>
-        <div className="flex items-center gap-2 text-[10px] font-mono text-[var(--muted-foreground)]">
+        <div className="text-sm font-medium text-(--foreground) group-hover/skill:text-(--accent) transition-colors">{skill.name}</div>
+        <div className="flex items-center gap-2 text-[10px] font-mono text-(--muted-foreground)">
           <span>{skill.years} yrs</span>
-          <span className="w-1 h-1 rounded-full bg-[var(--muted-foreground)]" />
+          <span className="w-1 h-1 rounded-full bg-(--muted-foreground)" />
           <span>{skill.projects} projects</span>
         </div>
       </div>
@@ -176,26 +176,26 @@ export default function Skills() {
 
       <div ref={root} className="section-container relative">
         <div className="skills-label flex items-center gap-4 mb-6 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             06 / Skills
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <h2 className="skills-heading text-3xl md:text-4xl font-serif font-bold opacity-0">
+          <h2 className="skills-heading text-3xl md:text-4xl font-display font-bold opacity-0">
             Technical <span className="gradient-text">Arsenal</span>
           </h2>
 
           <div className="flex items-center gap-6 skills-heading opacity-0">
             <div className="text-center">
-              <div className="text-xl font-serif font-bold gradient-text">{totalSkills}</div>
-              <div className="font-mono text-[9px] uppercase tracking-wider text-[var(--muted-foreground)]">Technologies</div>
+              <div className="text-xl font-display font-bold gradient-text">{totalSkills}</div>
+              <div className="font-mono text-[9px] uppercase tracking-wider text-(--muted-foreground)">Technologies</div>
             </div>
-            <div className="h-8 w-px bg-[var(--border)]" />
+            <div className="h-8 w-px bg-(--border)" />
             <div className="text-center">
-              <div className="text-xl font-serif font-bold gradient-text">{avgLevel}%</div>
-              <div className="font-mono text-[9px] uppercase tracking-wider text-[var(--muted-foreground)]">Avg Proficiency</div>
+              <div className="text-xl font-display font-bold gradient-text">{avgLevel}%</div>
+              <div className="font-mono text-[9px] uppercase tracking-wider text-(--muted-foreground)">Avg Proficiency</div>
             </div>
           </div>
         </div>
@@ -208,13 +208,13 @@ export default function Skills() {
               onClick={() => setActiveCategory(ci)}
               className={`skills-tab flex items-center gap-2 px-5 py-3 rounded-xl font-mono text-xs uppercase tracking-wider border transition-all opacity-0 ${
                 activeCategory === ci
-                  ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10 shadow-[0_0_20px_-5px_var(--accent)]"
-                  : "border-[var(--border)] text-[var(--muted-foreground)] hover:border-[var(--accent)]/40 hover:text-[var(--foreground)]"
+                  ? "border-(--accent) text-(--accent) bg-(--accent)/10 shadow-[0_0_20px_-5px_var(--accent)]"
+                  : "border-(--border) text-(--muted-foreground) hover:border-(--accent)/40 hover:text-(--foreground)"
               }`}
             >
               <span style={{ color: CATEGORY_COLORS[ci].accent }}>{CATEGORY_ICONS[ci]}</span>
               {category.name}
-              <span className="ml-1 px-1.5 py-0.5 rounded-md text-[9px] bg-[var(--muted)]">
+              <span className="ml-1 px-1.5 py-0.5 rounded-md text-[9px] bg-(--muted)">
                 {category.skills.length}
               </span>
             </button>

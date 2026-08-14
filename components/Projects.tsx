@@ -69,11 +69,11 @@ function ProjectCard({
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)] via-[var(--card)]/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-(--card) via-(--card)/20 to-transparent" />
 
         {/* Expand hint */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-xs flex items-center justify-center">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="w-5 h-5">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
             </svg>
@@ -82,7 +82,7 @@ function ProjectCard({
 
         {/* Number badge */}
         <div
-          className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold backdrop-blur-sm"
+          className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold backdrop-blur-xs"
           style={{ color: colors.from, border: `1px solid ${colors.from}60`, backgroundColor: `${colors.from}10` }}
         >
           {String(index + 1).padStart(2, "0")}
@@ -101,11 +101,11 @@ function ProjectCard({
           </span>
         </div>
 
-        <h3 className="text-xl font-serif font-bold text-[var(--foreground)] mb-3 group-hover:text-[var(--accent)] transition-colors leading-tight">
+        <h3 className="text-xl font-display font-bold text-(--foreground) mb-3 group-hover:text-(--accent) transition-colors leading-tight">
           {project.name}
         </h3>
 
-        <p className="text-sm text-[var(--muted-foreground)] mb-6 leading-relaxed line-clamp-3">
+        <p className="text-sm text-(--muted-foreground) mb-6 leading-relaxed line-clamp-3">
           {project.description}
         </p>
 
@@ -113,7 +113,7 @@ function ProjectCard({
           {project.tech.map((tech) => (
             <span
               key={tech}
-              className="tech-tag px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase rounded-md border border-[var(--border)] text-[var(--muted-foreground)] group-hover:text-[var(--accent)] group-hover:border-[var(--accent)]/30 transition-colors"
+              className="tech-tag px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase rounded-md border border-(--border) text-(--muted-foreground) group-hover:text-(--accent) group-hover:border-(--accent)/30 transition-colors"
             >
               {tech}
             </span>
@@ -227,14 +227,14 @@ export default function Projects() {
 
       <div ref={root} className="section-container relative">
         <div className="projects-label flex items-center gap-4 mb-6 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             04 / Projects
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <h2 className="projects-heading text-3xl md:text-4xl font-serif font-bold opacity-0">
+          <h2 className="projects-heading text-3xl md:text-4xl font-display font-bold opacity-0">
             Featured <span className="gradient-text">Work</span>
           </h2>
 
@@ -245,8 +245,8 @@ export default function Projects() {
                 onClick={() => setActiveFilter(tech)}
                 className={`projects-filter-btn px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider rounded-full border transition-all opacity-0 ${
                   activeFilter === tech
-                    ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10"
-                    : "border-[var(--border)] text-[var(--muted-foreground)] hover:border-[var(--accent)]/50"
+                    ? "border-(--accent) text-(--accent) bg-(--accent)/10"
+                    : "border-(--border) text-(--muted-foreground) hover:border-(--accent)/50"
                 }`}
               >
                 {tech}

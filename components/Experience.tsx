@@ -161,14 +161,14 @@ export default function Experience() {
 
       <div ref={root} className="section-container relative">
         <div className="experience-label flex items-center gap-4 mb-6 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             03 / Experience
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <h2 className="experience-heading text-3xl md:text-4xl font-serif font-bold opacity-0">
+          <h2 className="experience-heading text-3xl md:text-4xl font-display font-bold opacity-0">
             Professional <span className="gradient-text">Journey</span>
           </h2>
           <div className="flex items-center gap-5 experience-heading opacity-0">
@@ -178,8 +178,8 @@ export default function Experience() {
               { val: "4", label: "Industries" },
             ].map((s) => (
               <div key={s.label} className="experience-summary-stat text-center opacity-0">
-                <div className="text-lg font-serif font-bold gradient-text">{s.val}</div>
-                <div className="font-mono text-[9px] uppercase tracking-wider text-[var(--muted-foreground)]">{s.label}</div>
+                <div className="text-lg font-display font-bold gradient-text">{s.val}</div>
+                <div className="font-mono text-[9px] uppercase tracking-wider text-(--muted-foreground)">{s.label}</div>
               </div>
             ))}
           </div>
@@ -198,7 +198,7 @@ export default function Experience() {
                 vectorEffect="non-scaling-stroke"
               />
             </svg>
-            <div className="timeline-energy absolute left-1/2 -translate-x-1/2 w-1.5 h-8 rounded-full bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-0" />
+            <div className="timeline-energy absolute left-1/2 -translate-x-1/2 w-1.5 h-8 rounded-full bg-linear-to-b from-transparent via-(--accent) to-transparent opacity-0" />
           </div>
 
           {/* Mobile timeline line */}
@@ -239,7 +239,7 @@ export default function Experience() {
                   </div>
 
                   {/* Card */}
-                  <div className={`ml-10 md:ml-20 flex-1 glass-card rounded-xl overflow-hidden transition-all duration-300 ${isActive ? "border-[var(--accent)]/30 shadow-lg" : ""}`}>
+                  <div className={`ml-10 md:ml-20 flex-1 glass-card rounded-xl overflow-hidden transition-all duration-300 ${isActive ? "border-(--accent)/30 shadow-lg" : ""}`}>
                     {/* Top accent bar */}
                     <div
                       className="h-[2px] transition-all duration-500"
@@ -253,7 +253,7 @@ export default function Experience() {
                       <div className="flex items-start gap-4">
                         {/* Logo */}
                         <div
-                          className="exp-logo w-11 h-11 rounded-lg bg-[var(--muted)] flex items-center justify-center overflow-hidden shrink-0 border border-[var(--border)] transition-all"
+                          className="exp-logo w-11 h-11 rounded-lg bg-(--muted) flex items-center justify-center overflow-hidden shrink-0 border border-(--border) transition-all"
                           style={{ borderColor: isActive ? `${color}40` : undefined }}
                         >
                           <Image
@@ -268,7 +268,7 @@ export default function Experience() {
                         {/* Title block */}
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-0.5">
-                            <h3 className="text-base font-serif font-bold text-[var(--foreground)] leading-tight">
+                            <h3 className="text-base font-display font-bold text-(--foreground) leading-tight">
                               {exp.role}
                             </h3>
                             <span
@@ -279,11 +279,11 @@ export default function Experience() {
                             </span>
                           </div>
                           <div className="flex items-center gap-2 mt-1">
-                            <svg viewBox="0 0 16 16" fill="none" className="w-3 h-3 text-[var(--muted-foreground)]">
+                            <svg viewBox="0 0 16 16" fill="none" className="w-3 h-3 text-(--muted-foreground)">
                               <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
                               <path d="M8 4v4l2.5 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                             </svg>
-                            <span className="font-mono text-[11px] text-[var(--muted-foreground)]">
+                            <span className="font-mono text-[11px] text-(--muted-foreground)">
                               {exp.period}
                             </span>
                           </div>
@@ -307,7 +307,7 @@ export default function Experience() {
                         {exp.bullets.map((bullet, j) => (
                           <div
                             key={j}
-                            className="exp-bullet flex items-start gap-2.5 text-sm text-[var(--muted-foreground)] leading-relaxed opacity-0"
+                            className="exp-bullet flex items-start gap-2.5 text-sm text-(--muted-foreground) leading-relaxed opacity-0"
                           >
                             <svg viewBox="0 0 8 8" className="w-1.5 h-1.5 mt-[7px] shrink-0" style={{ fill: color }}>
                               <circle cx="4" cy="4" r="4" />
@@ -325,7 +325,7 @@ export default function Experience() {
 
           {/* Timeline end cap */}
           <div className="absolute left-3 md:left-8 bottom-0 -translate-x-1/2">
-            <div className="w-2 h-2 rounded-full bg-[var(--muted-foreground)] opacity-30" />
+            <div className="w-2 h-2 rounded-full bg-(--muted-foreground) opacity-30" />
           </div>
         </div>
       </div>

@@ -103,7 +103,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-8">
       <div
         ref={overlayRef}
         className="absolute inset-0 bg-black/70 backdrop-blur-md opacity-0"
@@ -112,13 +112,13 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
 
       <div
         ref={contentRef}
-        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[var(--border)] opacity-0"
+        className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-(--border) opacity-0"
         style={{ background: "var(--card)" }}
       >
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/80 hover:text-white hover:bg-black/70 transition-all"
+          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 backdrop-blur-xs flex items-center justify-center text-white/80 hover:text-white hover:bg-black/70 transition-all"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
             <path d="M18 6L6 18M6 6l12 12" />
@@ -126,7 +126,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
         </button>
 
         {/* Image gallery */}
-        <div className="modal-image-container relative w-full aspect-[16/9] overflow-hidden rounded-t-2xl bg-[var(--muted)]">
+        <div className="modal-image-container relative w-full aspect-video overflow-hidden rounded-t-2xl bg-(--muted)">
           {project.images.map((src, i) => (
             <div
               key={i}
@@ -138,7 +138,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
             >
               {!imageLoaded[i] && currentImage === i && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 border-2 border-[var(--accent)]/30 border-t-[var(--accent)] rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-(--accent)/30 border-t-(--accent) rounded-full animate-spin" />
                 </div>
               )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -153,12 +153,12 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
           ))}
 
           {/* Image overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)] via-transparent to-transparent opacity-60" />
+          <div className="absolute inset-0 bg-linear-to-t from-(--card) via-transparent to-transparent opacity-60" />
 
           {/* Navigation arrows */}
           <button
             onClick={() => setCurrentImage((p) => (p - 1 + project.images.length) % project.images.length)}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 hover:text-white hover:bg-black/60 transition-all"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white/80 hover:text-white hover:bg-black/60 transition-all"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
               <path d="M15 18l-6-6 6-6" />
@@ -166,7 +166,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
           </button>
           <button
             onClick={() => setCurrentImage((p) => (p + 1) % project.images.length)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white/80 hover:text-white hover:bg-black/60 transition-all"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white/80 hover:text-white hover:bg-black/60 transition-all"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
               <path d="M9 18l6-6-6-6" />
@@ -196,14 +196,14 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
             <span className="font-mono text-xs tracking-wider" style={{ color: accentColor }}>
               {project.year}
             </span>
-            <div className="h-px flex-1 bg-[var(--border)]" />
+            <div className="h-px flex-1 bg-(--border)" />
           </div>
 
-          <h3 className="modal-detail text-2xl md:text-3xl font-serif font-bold text-[var(--foreground)] mb-4">
+          <h3 className="modal-detail text-2xl md:text-3xl font-display font-bold text-(--foreground) mb-4">
             {project.name}
           </h3>
 
-          <p className="modal-detail text-sm md:text-base text-[var(--muted-foreground)] leading-relaxed mb-6">
+          <p className="modal-detail text-sm md:text-base text-(--muted-foreground) leading-relaxed mb-6">
             {project.longDescription}
           </p>
 
@@ -211,7 +211,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
             {project.tech.map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase rounded-md border text-[var(--muted-foreground)]"
+                className="px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase rounded-md border text-(--muted-foreground)"
                 style={{ borderColor: `${accentColor}40`, color: accentColor }}
               >
                 {tech}
@@ -234,7 +234,7 @@ export default function ProjectModal({ project, isOpen, onClose, accentColor }: 
             </a>
             <button
               onClick={handleClose}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-wider rounded-lg border border-[var(--border)] text-[var(--foreground)] hover:border-[var(--accent)] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-wider rounded-lg border border-(--border) text-(--foreground) hover:border-(--accent) transition-colors"
             >
               Close
             </button>

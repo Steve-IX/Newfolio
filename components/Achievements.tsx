@@ -72,23 +72,23 @@ function AchievementCard({
             </linearGradient>
           </defs>
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-[var(--accent)]">
+        <div className="absolute inset-0 flex items-center justify-center text-(--accent)">
           {ICONS[index] || ICONS[0]}
         </div>
       </div>
 
-      <div className="text-3xl md:text-4xl font-serif font-bold gradient-text mb-1">
+      <div className="text-3xl md:text-4xl font-display font-bold gradient-text mb-1">
         {value}
         {achievement.suffix}
       </div>
-      <div className="text-xs font-mono uppercase tracking-wider text-[var(--foreground)] mb-1">
+      <div className="text-xs font-mono uppercase tracking-wider text-(--foreground) mb-1">
         {achievement.label}
       </div>
-      <div className="text-[10px] text-[var(--muted-foreground)]">
+      <div className="text-[10px] text-(--muted-foreground)">
         {achievement.description}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-(--accent) to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
   );
 }
@@ -147,13 +147,13 @@ export default function Achievements() {
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
       <div ref={root} className="section-container relative">
         <div className="achievements-label flex items-center gap-4 mb-6 opacity-0">
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-[var(--accent)]">
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-(--accent)">
             02 / Achievements
           </span>
-          <div className="h-px flex-1 bg-[var(--border)]" />
+          <div className="h-px flex-1 bg-(--border)" />
         </div>
 
-        <h2 className="achievement-heading text-3xl md:text-4xl font-serif font-bold mb-12 opacity-0">
+        <h2 className="achievement-heading text-3xl md:text-4xl font-display font-bold mb-12 opacity-0">
           Impact in <span className="gradient-text">Numbers</span>
         </h2>
 

@@ -217,7 +217,7 @@ export default function Hero() {
       ref={root}
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      <div className="hero-overlay absolute inset-0 bg-[var(--background)] z-10" />
+      <div className="hero-overlay absolute inset-0 bg-(--background) z-10" />
 
       <ParticleField count={60} />
 
@@ -267,16 +267,16 @@ export default function Hero() {
 
       {/* Floating geometric shapes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <div className="hero-float-shape absolute top-[12%] left-[6%] w-14 h-14 border border-[var(--accent)]/15 rotate-45 rounded-sm" />
-        <div className="hero-float-shape absolute top-[22%] right-[12%] w-6 h-6 bg-[var(--accent)]/8 rounded-full" />
-        <div className="hero-float-shape absolute bottom-[28%] left-[12%] w-10 h-10 border border-[var(--accent-secondary)]/12 rounded-full" />
-        <div className="hero-float-shape absolute bottom-[12%] right-[6%] w-16 h-16 border border-[var(--accent)]/8 rotate-12" />
-        <div className="hero-float-shape absolute top-[50%] left-[2%] w-5 h-5 bg-[var(--accent-secondary)]/6 rotate-45" />
-        <div className="hero-float-shape absolute top-[6%] right-[22%] w-8 h-8 border border-[var(--accent)]/10 rounded-lg rotate-[30deg]" />
-        <div className="hero-float-shape absolute top-[38%] left-[35%] w-3 h-3 bg-[var(--accent)]/12 rounded-full" />
-        <div className="hero-float-shape absolute bottom-[35%] right-[30%] w-5 h-5 border border-[var(--accent)]/8 rotate-[60deg]" />
-        <div className="hero-float-shape absolute top-[70%] left-[25%] w-4 h-4 border border-[var(--accent-secondary)]/10 rounded-full" />
-        <div className="hero-float-shape absolute top-[18%] left-[45%] w-3 h-3 bg-[var(--accent)]/6 rounded-full" />
+        <div className="hero-float-shape absolute top-[12%] left-[6%] w-14 h-14 border border-(--accent)/15 rotate-45 rounded-xs" />
+        <div className="hero-float-shape absolute top-[22%] right-[12%] w-6 h-6 bg-(--accent)/8 rounded-full" />
+        <div className="hero-float-shape absolute bottom-[28%] left-[12%] w-10 h-10 border border-(--accent-secondary)/12 rounded-full" />
+        <div className="hero-float-shape absolute bottom-[12%] right-[6%] w-16 h-16 border border-(--accent)/8 rotate-12" />
+        <div className="hero-float-shape absolute top-[50%] left-[2%] w-5 h-5 bg-(--accent-secondary)/6 rotate-45" />
+        <div className="hero-float-shape absolute top-[6%] right-[22%] w-8 h-8 border border-(--accent)/10 rounded-lg rotate-30" />
+        <div className="hero-float-shape absolute top-[38%] left-[35%] w-3 h-3 bg-(--accent)/12 rounded-full" />
+        <div className="hero-float-shape absolute bottom-[35%] right-[30%] w-5 h-5 border border-(--accent)/8 rotate-60" />
+        <div className="hero-float-shape absolute top-[70%] left-[25%] w-4 h-4 border border-(--accent-secondary)/10 rounded-full" />
+        <div className="hero-float-shape absolute top-[18%] left-[45%] w-3 h-3 bg-(--accent)/6 rounded-full" />
       </div>
 
       {/* Content */}
@@ -284,29 +284,29 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-screen py-24">
           {/* Left: Text */}
           <div className="text-left lg:pr-8">
-            <p className="hero-subtitle font-mono text-xs md:text-sm tracking-[0.3em] uppercase text-[var(--accent)] mb-6 opacity-0">
+            <p className="hero-subtitle font-mono text-xs md:text-sm tracking-[0.3em] uppercase text-(--accent) mb-6 opacity-0">
               Software Engineer &middot; Automation &middot; AI
             </p>
 
             <h1
-              className="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-serif font-bold mb-6 leading-[0.95]"
+              className="hero-name text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-display font-bold mb-6 leading-[0.95]"
               style={{ opacity: 0, perspective: "1200px" }}
             >
               Stephen Addo
             </h1>
 
             <p
-              className="hero-tagline text-lg md:text-xl lg:text-2xl text-[var(--muted-foreground)] font-light mb-4 tracking-wide"
+              className="hero-tagline text-lg md:text-xl lg:text-2xl text-(--muted-foreground) font-light mb-4 tracking-wide"
               style={{ opacity: 0, perspective: "600px" }}
             >
               Automation Software Engineer @ BDO UK
             </p>
 
-            <div className="hero-accent-line h-px w-28 bg-gradient-to-r from-[var(--accent)] via-[var(--accent-secondary)] to-transparent mb-6 origin-left" />
+            <div className="hero-accent-line h-px w-28 bg-linear-to-r from-(--accent) via-(--accent-secondary) to-transparent mb-6 origin-left" />
 
             <div className="flex flex-wrap gap-2 mb-8">
               {["C#", "Java", "RPA", "UiPath", ".NET", "Python"].map((tech) => (
-                <span key={tech} className="hero-badge px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase text-[var(--accent)] border border-[var(--accent)]/20 rounded-full opacity-0 hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 transition-all cursor-default">
+                <span key={tech} className="hero-badge px-3 py-1.5 font-mono text-[10px] tracking-wider uppercase text-(--accent) border border-(--accent)/20 rounded-full opacity-0 hover:border-(--accent)/50 hover:bg-(--accent)/5 transition-all cursor-default">
                   {tech}
                 </span>
               ))}
@@ -315,14 +315,14 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row items-start gap-4 mb-10">
               <a
                 href="#projects"
-                className="hero-cta group relative px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-[var(--accent)] text-[var(--background)] rounded-lg overflow-hidden opacity-0"
+                className="hero-cta group relative px-8 py-3.5 font-mono text-sm uppercase tracking-wider bg-(--accent) text-(--background) rounded-lg overflow-hidden opacity-0"
               >
                 <span className="relative z-10">View Work</span>
-                <span className="absolute inset-0 bg-[var(--accent-secondary)] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <span className="absolute inset-0 bg-(--accent-secondary) translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </a>
               <a
                 href="#contact"
-                className="hero-cta px-8 py-3.5 font-mono text-sm uppercase tracking-wider border border-[var(--border)] text-[var(--foreground)] rounded-lg hover:border-[var(--accent)] transition-colors duration-300 opacity-0"
+                className="hero-cta px-8 py-3.5 font-mono text-sm uppercase tracking-wider border border-(--border) text-(--foreground) rounded-lg hover:border-(--accent) transition-colors duration-300 opacity-0"
               >
                 Get in Touch
               </a>
@@ -336,11 +336,11 @@ export default function Hero() {
               ].map((stat, i) => (
                 <div key={stat.label} className="flex items-center gap-6">
                   <div className="hero-stat opacity-0">
-                    <div className="text-2xl font-serif font-bold gradient-text">{stat.value}</div>
-                    <div className="font-mono text-[10px] tracking-wider uppercase text-[var(--muted-foreground)]">{stat.label}</div>
+                    <div className="text-2xl font-display font-bold gradient-text">{stat.value}</div>
+                    <div className="font-mono text-[10px] tracking-wider uppercase text-(--muted-foreground)">{stat.label}</div>
                   </div>
                   {i < 2 && (
-                    <div className="hero-stat-divider w-px h-8 bg-[var(--border)] origin-center" />
+                    <div className="hero-stat-divider w-px h-8 bg-(--border) origin-center" />
                   )}
                 </div>
               ))}
@@ -350,23 +350,23 @@ export default function Hero() {
           {/* Right: Globe + orbital elements */}
           <div className="hero-globe-container hidden lg:flex items-center justify-center opacity-0 relative -mr-8 xl:-mr-4">
             {/* Outer glow ring */}
-            <div className="hero-glow-ring absolute w-[110%] h-[110%] rounded-full border border-[var(--accent)]/5 border-dashed" style={{ transformOrigin: "center" }} />
+            <div className="hero-glow-ring absolute w-[110%] h-[110%] rounded-full border border-(--accent)/5 border-dashed" style={{ transformOrigin: "center" }} />
 
             {/* Orbiting dots */}
             <div className="orbit-dot absolute w-full h-full" style={{ transformOrigin: "center" }}>
               <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
-                <div className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_12px_var(--accent)]" />
-                <div className="w-px h-4 bg-[var(--accent)]/20" />
+                <div className="w-2.5 h-2.5 rounded-full bg-(--accent) shadow-[0_0_12px_var(--accent)]" />
+                <div className="w-px h-4 bg-(--accent)/20" />
               </div>
             </div>
             <div className="orbit-dot absolute w-[85%] h-[85%] top-[7.5%] left-[7.5%]" style={{ transformOrigin: "center" }}>
               <div className="absolute bottom-0 right-0">
-                <div className="w-2 h-2 rounded-full bg-[var(--accent-secondary)] shadow-[0_0_10px_var(--accent-secondary)]" />
+                <div className="w-2 h-2 rounded-full bg-(--accent-secondary) shadow-[0_0_10px_var(--accent-secondary)]" />
               </div>
             </div>
             <div className="orbit-dot absolute w-[70%] h-[70%] top-[15%] left-[15%]" style={{ transformOrigin: "center" }}>
               <div className="absolute left-0 top-1/2 -translate-y-1/2">
-                <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent)] opacity-60" />
+                <div className="w-1.5 h-1.5 rounded-full bg-(--accent) shadow-[0_0_8px_var(--accent)] opacity-60" />
               </div>
             </div>
 
@@ -376,11 +376,11 @@ export default function Hero() {
 
         {/* Scroll indicator */}
         <div className="hero-scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0">
-          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--muted-foreground)]">
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-(--muted-foreground)">
             Scroll
           </span>
           <svg
-            className="scroll-arrow w-4 h-6 text-[var(--accent)]"
+            className="scroll-arrow w-4 h-6 text-(--accent)"
             viewBox="0 0 16 24"
             fill="none"
             stroke="currentColor"

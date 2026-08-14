@@ -77,14 +77,14 @@ export default function Navigation() {
       ref={root}
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         isScrolled
-          ? "bg-[var(--background)]/90 backdrop-blur-xl border-b border-[var(--border)]"
+          ? "bg-(--background)/90 backdrop-blur-xl border-b border-(--border)"
           : "bg-transparent"
       }`}
     >
       <div className="section-container flex items-center justify-between h-16 md:h-20">
         <a
           href="#hero"
-          className="font-mono text-sm tracking-widest uppercase text-[var(--accent)] font-bold"
+          className="font-mono text-sm tracking-widest uppercase text-(--accent) font-bold"
         >
           SA.
         </a>
@@ -97,15 +97,15 @@ export default function Navigation() {
               href={link.href}
               className={`nav-link relative px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors ${
                 activeSection === link.href.replace("#", "")
-                  ? "text-[var(--accent)]"
-                  : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  ? "text-(--accent)"
+                  : "text-(--muted-foreground) hover:text-(--foreground)"
               }`}
               onMouseEnter={handleLinkHover}
               onMouseLeave={handleLinkLeave}
             >
               {link.label}
               {activeSection === link.href.replace("#", "") && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[var(--accent)]" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-(--accent)" />
               )}
             </a>
           ))}
@@ -121,17 +121,17 @@ export default function Navigation() {
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-6 h-0.5 bg-[var(--foreground)] transition-transform duration-300 ${
+              className={`block w-6 h-0.5 bg-(--foreground) transition-transform duration-300 ${
                 mobileOpen ? "rotate-45 translate-y-2" : ""
               }`}
             />
             <span
-              className={`block w-6 h-0.5 bg-[var(--foreground)] transition-opacity duration-300 ${
+              className={`block w-6 h-0.5 bg-(--foreground) transition-opacity duration-300 ${
                 mobileOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`block w-6 h-0.5 bg-[var(--foreground)] transition-transform duration-300 ${
+              className={`block w-6 h-0.5 bg-(--foreground) transition-transform duration-300 ${
                 mobileOpen ? "-rotate-45 -translate-y-2" : ""
               }`}
             />
@@ -141,7 +141,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[var(--background)]/95 backdrop-blur-xl border-b border-[var(--border)]">
+        <div className="md:hidden bg-(--background)/95 backdrop-blur-xl border-b border-(--border)">
           <div className="section-container py-6 flex flex-col gap-2">
             {navLinks.map((link) => (
               <a
@@ -149,8 +149,8 @@ export default function Navigation() {
                 href={link.href}
                 className={`mobile-nav-link py-3 px-4 text-sm font-mono uppercase tracking-wider rounded-lg transition-colors ${
                   activeSection === link.href.replace("#", "")
-                    ? "text-[var(--accent)] bg-[var(--muted)]"
-                    : "text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--muted)]"
+                    ? "text-(--accent) bg-(--muted)"
+                    : "text-(--muted-foreground) hover:text-(--foreground) hover:bg-(--muted)"
                 }`}
                 onClick={() => setMobileOpen(false)}
               >

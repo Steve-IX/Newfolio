@@ -37,7 +37,7 @@ export default function Footer() {
   }, [isVisible]);
 
   return (
-    <footer ref={sectionRef} className="relative py-12 border-t border-[var(--border)]">
+    <footer ref={sectionRef} className="relative py-12 border-t border-(--border)">
       <div ref={root} className="section-container">
         <svg
           className="absolute top-0 left-0 w-full h-px"
@@ -58,15 +58,15 @@ export default function Footer() {
 
         <div className="footer-content flex flex-col md:flex-row items-center justify-between gap-4 opacity-0">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs tracking-widest uppercase text-[var(--accent)]">
+            <span className="font-mono text-xs tracking-widest uppercase text-(--accent)">
               SA.
             </span>
-            <span className="text-xs text-[var(--muted-foreground)]">
+            <span className="text-xs text-(--muted-foreground)">
               &copy; {new Date().getFullYear()} Stephen Addo
             </span>
           </div>
 
-          <p className="font-mono text-[10px] text-[var(--muted-foreground)] tracking-wider">
+          <p className="font-mono text-[10px] text-(--muted-foreground) tracking-wider">
             Built with Next.js &middot; Anime.js v4 &middot; Tailwind CSS
           </p>
         </div>

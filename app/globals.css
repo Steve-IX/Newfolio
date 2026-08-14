@@ -1,12 +1,14 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant light (&:is(.light *));
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+  --color-accent-quaternary: var(--accent-quaternary);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -15,9 +17,10 @@
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-playfair), Georgia, serif;
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-mono: var(--font-jetbrains), monospace;
+  --font-display: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
+  --ease-entrance: cubic-bezier(0.25, 1, 0.5, 1);
   --animate-pulse-glow: pulseGlow 3s ease-in-out infinite;
 
   @keyframes pulseGlow {
@@ -31,30 +34,26 @@
   }
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--border);
   }
 }
 
 @utility section-container {
-  @apply max-w-7xl mx-auto px-6 md:px-12 lg:px-20;
+  @apply mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-20;
 }
 
 @utility section-padding {
   @apply py-24 md:py-32 lg:py-40;
+}
+
+@utility site-grid {
+  @apply grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 gap-y-8;
 }
 
 @utility gradient-text {
@@ -68,33 +67,68 @@
   background-clip: text;
 }
 
-@utility glass-card {
-  background: rgba(18, 18, 30, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-
-  .light & {
-    background: rgba(255, 255, 255, 0.7);
-  }
+@utility glass-surface {
+  background: var(--glass-fill);
+  backdrop-filter: blur(18px) saturate(1.45);
+  -webkit-backdrop-filter: blur(18px) saturate(1.45);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 10px 40px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight);
+  border-radius: 1rem;
 }
 
-@utility light {
-  & .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-  }
-
-  & .glow-accent {
-    box-shadow: 0 0 30px -5px rgba(0, 145, 179, 0.1);
-  }
+@utility glass-card {
+  background: var(--glass-fill);
+  backdrop-filter: blur(18px) saturate(1.45);
+  -webkit-backdrop-filter: blur(18px) saturate(1.45);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 10px 40px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight);
+  border-radius: 1rem;
 }
 
 @utility glow-accent {
-  box-shadow: 0 0 30px -5px rgba(0, 229, 255, 0.15);
+  box-shadow:
+    0 0 32px -6px color-mix(in srgb, var(--accent) 28%, transparent),
+    inset 0 1px 0 var(--glass-highlight);
+}
 
-  .light & {
-    box-shadow: 0 0 30px -5px rgba(0, 145, 179, 0.1);
+@utility tag-angled {
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+
+@utility corner-mark {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    border-color: var(--accent);
+    border-style: solid;
+    opacity: 0.55;
   }
+
+  &::before {
+    top: 8px;
+    left: 8px;
+    border-width: 1px 0 0 1px;
+  }
+
+  &::after {
+    right: 8px;
+    bottom: 8px;
+    border-width: 0 1px 1px 0;
+  }
+}
+
+@utility section-clip {
+  clip-path: polygon(0 18px, 100% 0, 100% 100%, 0 100%);
 }
 
 @utility dot-grid {
@@ -112,26 +146,39 @@
     --foreground: #e8e6e3;
     --accent: #00e5ff;
     --accent-secondary: #ff9100;
+    --accent-tertiary: #a855f7;
+    --accent-quaternary: #10b981;
     --muted: #1a1a2e;
     --muted-foreground: #8b8fa3;
     --border: #1e1e32;
     --card: #12121e;
     --card-foreground: #d1cfc9;
+    --glass-fill: rgba(18, 18, 30, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.16);
+    --glass-shadow: rgba(0, 0, 0, 0.35);
     --font-inter: 'Inter', system-ui, sans-serif;
     --font-playfair: 'Playfair Display', Georgia, serif;
+    --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
     --font-jetbrains: 'JetBrains Mono', monospace;
   }
 
   .light {
-    --background: #f5f3f0;
-    --foreground: #1a1a2e;
-    --accent: #0091b3;
-    --accent-secondary: #d47600;
-    --muted: #e8e6e3;
-    --muted-foreground: #5a5e72;
-    --border: #d1cfc9;
+    --background: #eef7fa;
+    --foreground: #102028;
+    --accent: #007a99;
+    --accent-secondary: #c45e00;
+    --accent-tertiary: #6d28d9;
+    --accent-quaternary: #047857;
+    --muted: #d7eef4;
+    --muted-foreground: #3f5864;
+    --border: #c3dbe3;
     --card: #ffffff;
-    --card-foreground: #2a2a3e;
+    --card-foreground: #1a2a32;
+    --glass-fill: rgba(255, 255, 255, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --glass-shadow: rgba(16, 80, 96, 0.08);
   }
 
   * {
@@ -175,16 +222,24 @@
 }
 
 @layer base {
-  h1, h2, h3, h4 {
-    font-family: var(--font-playfair);
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-space-grotesk), var(--font-inter), system-ui, sans-serif;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.1;
   }
 
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 }
 

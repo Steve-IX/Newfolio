@@ -169,7 +169,7 @@ export default function Dissertation() {
 
         {/* Title block */}
         <div className="max-w-3xl mb-12">
-          <h2 className="diss-title text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 opacity-0 leading-tight">
+          <h2 className="diss-title text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4 opacity-0 leading-tight">
             Exploring Quantum Algorithms for{" "}
             <span className="gradient-text">Combinatorial Optimization</span>
           </h2>

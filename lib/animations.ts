@@ -1,4 +1,5 @@
 export const EASE = {
+  entrance: "easeOutQuart",
   smooth: "easeOutQuart",
   bounce: "easeOutBounce",
   elastic: "easeOutElastic(1, .6)",
@@ -8,17 +9,17 @@ export const EASE = {
 } as const;
 
 export const DURATION = {
-  fast: 400,
-  normal: 700,
-  slow: 1200,
-  reveal: 900,
-  counter: 2000,
+  fast: 250,
+  normal: 350,
+  slow: 450,
+  reveal: 400,
+  counter: 900,
 } as const;
 
 export const STAGGER = {
-  fast: 30,
-  normal: 60,
-  slow: 100,
-  chars: 25,
-  cards: 80,
+  fast: 40,
+  normal: 70,
+  slow: 80,
+  chars: 20,
+  cards: 70,
 } as const;

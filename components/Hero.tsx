@@ -10,8 +10,15 @@ import {
   spring,
   splitText,
 } from "animejs";
+import dynamic from "next/dynamic";
 import ParticleField from "./ParticleField";
-import WireframeGlobe from "./WireframeGlobe";
+
+const WireframeGlobe = dynamic(() => import("./WireframeGlobe"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-[650px] h-[650px] max-w-full rounded-full bg-(--accent)/5 blur-[2px]" aria-hidden />
+  ),
+});
 
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);

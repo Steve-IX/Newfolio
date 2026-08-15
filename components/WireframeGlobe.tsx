@@ -47,12 +47,13 @@ export default function WireframeGlobe({ size = 650, className = "" }: Wireframe
   return (
     <div
       ref={rootRef}
-      className={`relative ${className}`}
-      style={{ width: size, height: size }}
+      className={`relative w-full h-full ${className}`}
+      style={size ? { maxWidth: size, maxHeight: size } : undefined}
       aria-hidden
     >
       <div className="absolute inset-[-18%] rounded-full bg-(--accent) opacity-[0.07] blur-[90px] pointer-events-none" />
       <Canvas
+        className="h-full w-full"
         frameloop={frameloop}
         dpr={lite ? 1 : [1, 1.5]}
         gl={{ antialias: !lite, alpha: true, powerPreference: lite ? "low-power" : "high-performance" }}

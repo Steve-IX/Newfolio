@@ -116,21 +116,27 @@ export default function Dissertation() {
         });
       }
 
-      animate(".diss-qubit", {
-        scale: [0.5, 1.3, 0.5],
-        opacity: [0.2, 0.8, 0.2],
-        duration: () => Math.random() * 2000 + 3000,
-        loop: true,
-        ease: "easeInOutSine",
-        delay: () => Math.random() * 2000,
-      });
+      const qubits = root.current!.querySelectorAll(".diss-qubit");
+      if (qubits.length) {
+        animate(qubits, {
+          scale: [0.5, 1.3, 0.5],
+          opacity: [0.2, 0.8, 0.2],
+          duration: () => Math.random() * 2000 + 3000,
+          loop: true,
+          ease: "easeInOutSine",
+          delay: () => Math.random() * 2000,
+        });
+      }
 
-      animate(".diss-orbit", {
-        rotate: [0, 360],
-        duration: () => Math.random() * 8000 + 15000,
-        loop: true,
-        ease: "linear",
-      });
+      const orbits = root.current!.querySelectorAll(".diss-orbit");
+      if (orbits.length) {
+        animate(orbits, {
+          rotate: [0, 360],
+          duration: () => Math.random() * 8000 + 15000,
+          loop: true,
+          ease: "linear",
+        });
+      }
     });
 
     return () => scope.revert();

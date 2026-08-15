@@ -96,26 +96,32 @@ export default function Experience() {
         duration: 400,
       });
 
-      animate(".timeline-energy", {
-        translateY: ["-100%", "800%"],
-        opacity: [0, 1, 1, 0],
-        duration: 4000,
-        loop: true,
-        ease: "easeInOutSine",
-        delay: 2000,
-      });
+      const energy = root.current!.querySelectorAll(".timeline-energy");
+      if (energy.length) {
+        animate(energy, {
+          translateY: ["-100%", "800%"],
+          opacity: [0, 1, 1, 0],
+          duration: 4000,
+          loop: true,
+          ease: "easeInOutSine",
+          delay: 2000,
+        });
+      }
 
-      animate(".timeline-node-inner", {
-        boxShadow: [
-          { to: "0 0 0px var(--accent)" },
-          { to: "0 0 15px var(--accent)" },
-          { to: "0 0 0px var(--accent)" },
-        ],
-        duration: 3000,
-        loop: true,
-        ease: "easeInOutSine",
-        delay: stagger(400, { start: 1500 }),
-      });
+      const nodes = root.current!.querySelectorAll(".timeline-node");
+      if (nodes.length) {
+        animate(nodes, {
+          boxShadow: [
+            { to: "0 0 0px var(--accent)" },
+            { to: "0 0 15px var(--accent)" },
+            { to: "0 0 0px var(--accent)" },
+          ],
+          duration: 3000,
+          loop: true,
+          ease: "easeInOutSine",
+          delay: stagger(400, { start: 1500 }),
+        });
+      }
     });
 
     return () => scope.revert();
